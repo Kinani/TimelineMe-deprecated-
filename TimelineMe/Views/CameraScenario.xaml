@@ -1,0 +1,58 @@
+﻿
+<Page
+    x:Class="TimelineMe.Views.CameraScenario"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TimelineMe.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="12,20,12,12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock Text="Description:" Style="{StaticResource SampleHeaderTextStyle}"/>
+                <TextBlock Style="{StaticResource ScenarioDescriptionTextStyle}" TextWrapping="Wrap">
+                Here you can take photos, capture videos to add to your TimelineMe video.
+                </TextBlock>
+            </StackPanel>
+
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                    <StackPanel Orientation="Vertical">
+                        <ComboBox x:Name="camComboBox" FontSize="10">
+                            <ComboBoxItem IsSelected="True" IsEnabled="False">Pick Cam</ComboBoxItem>
+                            <ComboBoxItem x:Name="backCamComboItem" Tapped="backCamComboItem_Tapped">Back Camera</ComboBoxItem>
+                            <ComboBoxItem x:Name="frontCamComboItem" Tapped="frontCamComboItem_Tapped">Front Camera</ComboBoxItem>
+                        </ComboBox>
+                        <ComboBox x:Name="choseVidoeOrPicture" FontSize="10">
+                            <!--<ComboBoxItem IsSelected="True" IsEnabled="False">Vid or pic</ComboBoxItem>-->
+                            <ComboBoxItem x:Name="vidComboBoxItem" IsSelected="True" Tapped="vidComboBoxItem_Tapped">Video mode</ComboBoxItem>
+                            <ComboBoxItem x:Name="picComboBoxItem" Tapped="picComboBoxItem_Tapped">Picturing mode</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                       
+                    <Button Name="CameraStreamingButton" Content="Start Cam" Click="CameraStreamingButton_Click" Margin="10, 0, 10, 0"/>
+                    <Button Name="CameraSnapshotButton" Content="Capture" Click="CameraSnapshotButton_Click" Margin="0, 0, 10, 0" IsEnabled="False"/>
+                </StackPanel>
+
+                <CaptureElement Name="CamPreview" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill" Margin="0,10,0,0" />
+                <Canvas Name="SnapshotCanvas" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,0"/>
+            </Grid>
+
+            <!-- Status Block for providing messages to the user.  Use the
+             NotifyUser() method to populate the message -->
+            <TextBlock x:Name="StatusBlock" Grid.Row="2" Margin="12, 10, 12, 10" Visibility="Collapsed"/>
+        </Grid>
+    </Grid>
+</Page>
