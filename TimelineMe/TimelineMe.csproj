@@ -100,7 +100,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Media.cs" />
     <Compile Include="SampleConfiguration.cs" />
+    <Compile Include="ViewModels\MediasViewModel.cs" />
+    <Compile Include="ViewModels\MediaViewModel.cs" />
+    <Compile Include="ViewModels\MediaViewModelBase.cs" />
     <Compile Include="Views\CameraScenario.xaml.cs">
       <DependentUpon>CameraScenario.xaml</DependentUpon>
     </Compile>
@@ -154,9 +158,14 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="ViewModels\" />
+    <SDKReference Include="Microsoft.VCLibs, Version=14.0">
+      <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
+    </SDKReference>
+    <SDKReference Include="SQLite.UAP.2015, Version=3.8.11.1">
+      <Name>SQLite for Universal App Platform</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

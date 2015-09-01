@@ -28,7 +28,7 @@ namespace TimelineMe.Views
     /// </summary>
     public sealed partial class CameraScenario : Page
     {
-        /// <summary>
+        /// <summary>   
         /// Brush for drawing the bounding box around each detected face.
         /// </summary>
         private readonly SolidColorBrush lineBrush = new SolidColorBrush(Windows.UI.Colors.Yellow);
@@ -177,12 +177,10 @@ namespace TimelineMe.Views
             try
             {
                 this.mediaCapture = new MediaCapture();
-
-                // For this scenario, we only need Video (not microphone) so specify this in the initializer.
-                // NOTE: the appxmanifest only declares "webcam" under capabilities and if this is changed to include
-                // microphone (default constructor) you must add "microphone" to the manifest or initialization will fail.
+                
                 MediaCaptureSettings = new MediaCaptureInitializationSettings();
                 MediaCaptureSettings.StreamingCaptureMode = StreamingCaptureMode.AudioAndVideo;
+
                 if(whichCameraToInit)
                 {
                     MediaCaptureSettings.VideoDeviceId = backWebcam.Id;
