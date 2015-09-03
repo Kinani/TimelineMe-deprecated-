@@ -3,11 +3,83 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:TimelineMe.Views"
+    xmlns:con="using:TimelineMe.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="Studio"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <local:VidOrPicBindingConverter x:Key="boolConverter"></local:VidOrPicBindingConverter>
+    </Page.Resources>
 
-    </Grid>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid x:Name="RootGrid" Margin="12,20,12,12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock Text="Description:" Style="{StaticResource SampleHeaderTextStyle}"/>
+                <TextBlock Style="{StaticResource ScenarioDescriptionTextStyle}" TextWrapping="Wrap">
+                    Here you can explore your captured files, operate Timeline Me functions on them.
+                </TextBlock>
+                <!--<Button Name="OpenFile" Margin="0,10,0,0" Content="Open image file" />-->
+
+            </StackPanel>
+
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <!--<RowDefinition Height="Auto"/>-->
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <ListView x:Name="MyListView" AutomationProperties.AutomationId="ItemListView"
+            AutomationProperties.Name="Items In Group"
+            TabIndex="1"
+            Grid.Row="0"
+            IsItemClickEnabled="True"
+            ItemClick="ItemView_ItemClick"
+            SelectionMode="Multiple"
+            IsSwipeEnabled="false"
+            Margin="12,0,0,0" Header="Items:" SelectionChanged="MyListView_SelectionChanged">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="50" Margin="0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--<Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" Width="55" Height="55">
+                                    <Image x:Name="thumbnailsImage" Stretch="UniformToFill" Source="{Binding Name}"/>
+                                </Border>-->
+                                <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="12,0,0,0">
+                                    <TextBlock Text="{Binding CreationDate}" FontSize="15"/>
+                                    <TextBlock Text="{Binding VidOrPic, Converter={StaticResource boolConverter}}" FontSize="15"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
+                <CommandBar x:Name="CommandBar" Grid.Row="1">
+                    <AppBarButton x:Name="MergeItemAppBarBtn" Icon="Add" IsEnabled="False" Click="MergeItemAppBarBtn_Click"/>
+                    <AppBarSeparator/>
+                    <AppBarButton x:Name="DeleteItemAppBarBtn" Icon="Delete" IsEnabled="False" Click="DeleteItemAppBarBtn_Click"/>
+                    <AppBarButton x:Name="OpenItemAppBarBtn" Icon="OpenWith" IsEnabled="True" Click="OpenItemAppBarBtn_Click"/>
+                </CommandBar>
+            </Grid>
+
+            <!-- Status Block for providing messages to the user.  Use the
+             NotifyUser() method to populate the message -->
+            <Border x:Name="ErrorBorder" Background="Red" Grid.Row="2"/>
+            <TextBlock x:Name="StatusBlock" Grid.Row="2" Margin="12, 10, 12, 10" Visibility="Collapsed"/>
+        </Grid>
+    </Grid> 
+
 </Page>

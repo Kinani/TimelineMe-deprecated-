@@ -15,7 +15,8 @@ namespace TimelineMe
         List<Scenario> scenarios = new List<Scenario>
         {
             new Scenario() { Title="Start capturing photos/videos", ClassType=typeof(CameraScenario)},
-            new Scenario() { Title="Here you can explore your captured videos", ClassType=typeof(StudioScenario)},
+            new Scenario() { Title="Here you can explore your captured videos", ClassType=typeof(StudioScenario)}
+            
         };
     }
 

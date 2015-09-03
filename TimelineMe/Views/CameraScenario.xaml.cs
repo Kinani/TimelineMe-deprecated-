@@ -18,6 +18,8 @@ using Windows.UI.Xaml.Navigation;
 using TimelineMe;
 using Windows.Storage;
 using Windows.Devices.Enumeration;
+using TimelineMe.Models;
+using TimelineMe.ViewModels;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -31,17 +33,17 @@ namespace TimelineMe.Views
         /// <summary>   
         /// Brush for drawing the bounding box around each detected face.
         /// </summary>
-        private readonly SolidColorBrush lineBrush = new SolidColorBrush(Windows.UI.Colors.Yellow);
+        //private readonly SolidColorBrush lineBrush = new SolidColorBrush(Windows.UI.Colors.Yellow);
 
         /// <summary>
         /// Thickness of the face bounding box lines.
         /// </summary>
-        private readonly double lineThickness = 2.0;
+        //private readonly double lineThickness = 2.0;
 
         /// <summary>
         /// Transparent fill for the bounding box.
         /// </summary>
-        private readonly SolidColorBrush fillBrush = new SolidColorBrush(Windows.UI.Colors.Transparent);
+        //private readonly SolidColorBrush fillBrush = new SolidColorBrush(Windows.UI.Colors.Transparent);
 
         /// <summary>
         /// Reference back to the "root" page of the app.
@@ -58,6 +60,7 @@ namespace TimelineMe.Views
         /// </summary>
         private MediaCapture mediaCapture;
 
+        private MediaViewModel media;
 
         private MediaCaptureInitializationSettings MediaCaptureSettings;
         private DeviceInformation frontWebcam;
@@ -256,13 +259,32 @@ namespace TimelineMe.Views
                 {
                     captureFile = await folder.CreateFileAsync("timeline.mp4", CreationCollisionOption.GenerateUniqueName);
                     await mediaCapture.StartRecordToStorageFileAsync(MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD720p), captureFile);
+
                     //TODO : Link ViewModel
+                    
+                    media = new MediaViewModel();
+                    media.SaveItem(new MediaViewModel
+                    {
+                        Name = captureFile.DisplayName,
+                        CreationDate = captureFile.DateCreated.DateTime,
+                        VidOrPic = true
+                    });
+                   
                 }
                 else
                 {
                     captureFile = await folder.CreateFileAsync("timeline.jpeg", CreationCollisionOption.GenerateUniqueName);
                     await mediaCapture.CapturePhotoToStorageFileAsync(ImageEncodingProperties.CreateJpeg(), captureFile);
                     //TODO : link ViewMOdel
+                    media = new MediaViewModel();
+                    media.SaveItem(new MediaViewModel
+                    {
+                        Name = captureFile.DisplayName,
+                        CreationDate = captureFile.DateCreated.DateTime,
+                        VidOrPic = false
+                    });
+
+
                 }
 
                 // TODO
@@ -283,8 +305,8 @@ namespace TimelineMe.Views
                 case ScenarioState.Idle:
 
                     this.ShutdownWebCam();
-                    this.SnapshotCanvas.Background = null;
-                    this.SnapshotCanvas.Children.Clear();
+                    //this.SnapshotCanvas.Background = null;
+                    //this.SnapshotCanvas.Children.Clear();
                     this.CameraSnapshotButton.IsEnabled = false;
                     this.CameraStreamingButton.Content = "Start Cam";
                     this.CameraSnapshotButton.Content = "Capture";
@@ -299,8 +321,10 @@ namespace TimelineMe.Views
                         break;
                     }
 
-                    this.SnapshotCanvas.Background = null;
-                    this.SnapshotCanvas.Children.Clear();
+                   
+                    
+                    
+                    //this.SnapshotCanvas.Children.Clear();
                     this.CameraSnapshotButton.IsEnabled = true;
                     this.CameraStreamingButton.Content = "Stop Cam";
                     this.CameraSnapshotButton.Content = "Capture";

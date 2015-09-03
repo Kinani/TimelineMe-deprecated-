@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TimelineMe.Views;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -64,6 +65,7 @@ namespace TimelineMe
 
         }
 
+        
         public List<Scenario> Scenarios
         {
             get { return this.scenarios; }

@@ -29,7 +29,7 @@ namespace TimelineMe.ViewModels
             items = new ObservableCollection<MediaViewModel>();
             using (var db = new SQLiteConnection(App.SQLITE_PLATFORM, App.DB_PATH))
             {
-                var query = db.Table<Media>().OrderBy(c => c.Name);
+                var query = db.Table<Media>().OrderBy(c => c.Id);
                 foreach (var _item in query)
                 {
                     var item = new MediaViewModel()
